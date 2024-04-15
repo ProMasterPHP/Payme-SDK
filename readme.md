@@ -118,6 +118,9 @@ $paid_at = $payme['paid_at']; //to'lov amalga oshirilgan vaqt
 ```
 
 
+## Laravel alternative
+- [Laravel Payme](https://github.com/khamdullaevuz/laravel-payme)
+
 ## Authors
 - [@TurgunboyevUz](https://www.github.com/TurgunboyevUz/)
 - [@khamdullaevuz](https://www.github.com/khamdullaevuz/)
