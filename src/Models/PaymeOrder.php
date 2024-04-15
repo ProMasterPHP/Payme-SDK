@@ -23,7 +23,7 @@ class PaymeOrder extends PaymeDB{
     public function createOrder($amount = 0, $details = []){
         $this->query("INSERT INTO `payme_order`(`amount`, `details`) VALUES(:amount, :details)", [
             'amount'=>$amount,
-            'details'=>$details
+            'details'=>json_encode($details)
         ]);
 
         return ($this->query("SELECT LAST_INSERT_ID() as `order_id` FROM `payme_order`;")->fetch())['order_id'];
