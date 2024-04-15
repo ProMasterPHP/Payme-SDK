@@ -237,7 +237,7 @@ class PaymeService{
             $this->sendData($this->callback_url, [
                 'order_id'=>$transaction['owner_id'],
                 'state'=>PaymeState::Done,
-                'details'=>json_decode($order, true),
+                'details'=>json_decode($order['details'], true),
                 'paid_at'=>$paid_at
             ]);
         }else{
