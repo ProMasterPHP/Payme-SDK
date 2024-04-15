@@ -13,15 +13,17 @@ class PaymeOrder extends PaymeDB{
             `id` INT PRIMARY KEY AUTO_INCREMENT,
             `state` INT DEFAULT 1,
             `amount` BIGINT,
+            `details` TEXT,
             `paid_at` TIMESTAMP DEFAULT NULL,
             `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );");
     }
 
-    public function createOrder($amount = 0){
-        $this->query("INSERT INTO `payme_order`(`amount`) VALUES(:amount)", [
-            'amount'=>$amount
+    public function createOrder($amount = 0, $details = []){
+        $this->query("INSERT INTO `payme_order`(`amount`, `details`) VALUES(:amount, :details)", [
+            'amount'=>$amount,
+            'details'=>$details
         ]);
 
         return ($this->query("SELECT LAST_INSERT_ID() as `order_id` FROM `payme_order`;")->fetch())['order_id'];

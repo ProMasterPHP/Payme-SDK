@@ -232,9 +232,12 @@ class PaymeService{
                 'paid_at'=>$paid_at
             ]);
 
+            $order = $db->getOrder($transaction['owner_id']);
+
             $this->sendData($this->callback_url, [
                 'order_id'=>$transaction['owner_id'],
                 'state'=>PaymeState::Done,
+                'details'=>json_decode($order, true),
                 'paid_at'=>$paid_at
             ]);
         }else{
