@@ -43,7 +43,7 @@ return [
 ```
 # Set database (db.php)
 ```php
-include __DIR__."/src/autoload.php";
+require __DIR__."/src/autoload.php";
 $config = require("config.php");
 
 use TurgunboyevUz\Payme\Models\PaymeTransaction;
