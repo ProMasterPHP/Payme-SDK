@@ -13,6 +13,7 @@ class PaymeOrder extends PaymeDB{
             `id` INT PRIMARY KEY AUTO_INCREMENT,
             `state` INT DEFAULT 1,
             `amount` BIGINT,
+            `params` TEXT,
             `details` TEXT,
             `paid_at` TIMESTAMP DEFAULT NULL,
             `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -20,9 +21,10 @@ class PaymeOrder extends PaymeDB{
         );");
     }
 
-    public function createOrder($amount = 0, $details = []){
-        $this->query("INSERT INTO `payme_order`(`amount`, `details`) VALUES(:amount, :details)", [
+    public function createOrder(int $amount = 0, array $params = [], array $details = []){
+        $this->query("INSERT INTO `payme_order`(`amount`, `params`, `details`) VALUES(:amount, :params, :details)", [
             'amount'=>$amount,
+            'params'=>json_encode($params),
             'details'=>json_encode($details)
         ]);
 

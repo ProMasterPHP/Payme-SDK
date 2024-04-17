@@ -68,7 +68,9 @@ class PaymeService{
                         }else{
                             if($user['state'] == PaymeState::Pending){
                                 if($user['amount'] == $amount){
-                                    return $this->successCheckPerformTransaction();
+                                    $details = json_decode($user['details'], true);
+
+                                    return $this->successCheckPerformTransaction($details['items'], $details['shipping']);
                                 }else{
                                     throw new PaymeException(PaymeException::WRONG_AMOUNT);
                                 }
@@ -237,7 +239,7 @@ class PaymeService{
             $this->sendData($this->callback_url, [
                 'order_id'=>$transaction['owner_id'],
                 'state'=>PaymeState::Done,
-                'details'=>json_decode($order['details'], true),
+                'params'=>json_decode($order['params'], true),
                 'paid_at'=>$paid_at
             ]);
         }else{

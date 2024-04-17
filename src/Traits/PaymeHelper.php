@@ -35,11 +35,16 @@ trait PaymeHelper
         ]);
     }
 
-    public function successCheckPerformTransaction()
+    public function successCheckPerformTransaction($items = [], $shipping = [])
     {
-        return $this->success([
+        $result = [
             'allow' => true
-        ]);
+        ];
+        
+        if(!empty($items)){ $result['items'] = $items; }
+        if(!empty($shipping)){ $result['shipping'] = $shipping; }
+
+        return $this->success($result);
     }
 
     public function successPerformTransaction($state, $performTime, $transaction)
