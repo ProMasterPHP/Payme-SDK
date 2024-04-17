@@ -4,7 +4,7 @@ return [
     'payme_merchant_id'=>'MERCHANT_ID', //Merchant ID (Kassa ID)
     'payme_key'=>'KEY', //For testing Test Key
     'payme_min_amount'=>1000,
-    'payme_max_amount'=>1000000,
+    'payme_max_amount'=>999999999,
     'payme_account'=>'order_id',
     'payme_type'=>1, //Bir martalik - 1 | Jamg'arib boriladigan - 2
     'payme_callback_url'=>'', //To'lovlar haqidagi ma'lumot kelib tushadigan url
