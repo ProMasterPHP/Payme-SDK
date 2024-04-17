@@ -69,8 +69,11 @@ class PaymeService{
                             if($user['state'] == PaymeState::Pending){
                                 if($user['amount'] == $amount){
                                     $details = json_decode($user['details'], true);
+                                    $receipt_type = $details['receipt_type'] && null;
+                                    $items = $details['items'] && [];
+                                    $shipping = $details['shipping'] && [];
 
-                                    return $this->successCheckPerformTransaction($details['items'], $details['shipping']);
+                                    return $this->successCheckPerformTransaction($receipt_type, $items, $shipping);
                                 }else{
                                     throw new PaymeException(PaymeException::WRONG_AMOUNT);
                                 }

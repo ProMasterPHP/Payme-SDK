@@ -35,14 +35,15 @@ trait PaymeHelper
         ]);
     }
 
-    public function successCheckPerformTransaction($items = [], $shipping = [])
+    public function successCheckPerformTransaction($receipt_type = null, $items = [], $shipping = [])
     {
         $result = [
             'allow' => true
         ];
-        
-        if(!empty($items)){ $result['items'] = $items; }
-        if(!empty($shipping)){ $result['shipping'] = $shipping; }
+
+        if(!is_null($receipt_type)){ $result['detail']['receipt_type'] = $receipt_type; }
+        if(!empty($items)){ $result['detail']['items'] = $items; }
+        if(!empty($shipping)){ $result['detail']['shipping'] = $shipping; }
 
         return $this->success($result);
     }
