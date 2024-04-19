@@ -22,29 +22,19 @@ class PaymeOrder extends PaymeDB{
     }
 
     public function createOrder(int $amount = 0, array $params = [], array $details = []){
-        $this->query("INSERT INTO `payme_order`(`amount`, `params`, `details`) VALUES(:amount, :params, :details)", [
-            'amount'=>$amount,
-            'params'=>json_encode($params),
-            'details'=>json_encode($details)
-        ]);
-
-        return ($this->query("SELECT LAST_INSERT_ID() as `order_id` FROM `payme_order`;")->fetch())['order_id'];
+        return $this->insert('payme_order', [
+            'amount' => $amount,
+            'params' => json_encode($params),
+            'details' => json_encode($details)
+        ])->lastInsertID();
     }
 
     public function getOrder($id = 0){
-        $query = $this->query("SELECT * FROM `payme_order` WHERE `id` = :id", [
-            'id'=>$id
-        ]);
-
-        if($query->rowCount() > 0){
-            return $query->fetch();
-        }else{
-            return false;
-        }
+        return $this->select("payme_order", ["*"], [ "id" => $id ])->fetch() ?? false;
     }
 
     public function setOrder($id, $params = []){
-        $this->query("UPDATE `payme_order` SET".$this->prepareUpdate($params)." WHERE `id`='{$id}'", $params);
+        return $this->update("payme_order", $params, [ "id" => $id ]);
     }
 }
 ?>

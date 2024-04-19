@@ -27,19 +27,11 @@ class PaymeTransaction extends PaymeDB{
     }
 
     public function createTransaction($params = []){
-        return $this->query("INSERT INTO `payme_transaction` (`transaction`, `payme_time`, `amount`, `state`, `create_time`, `owner_id`) VALUES(:transaction, :payme_time, :amount, :state, :create_time, :owner_id);", $params);
+        return $this->insert('payme_transaction', $params)->lastInsertID();
     }
 
     public function getTransactionBy($key, $value){
-        $query = $this->query("SELECT * FROM `payme_transaction` WHERE $key = :search", [
-            'search'=>$value
-        ]);
-        
-        if($query->rowCount() > 0){
-            return $query->fetch();
-        }else{
-            return false;
-        }
+        return $this->select("payme_transaction", ["*"], [ $key => $value ])->fetch() ?? false;
     }
 
     public function getTransactionBetween($from, $to){
@@ -60,7 +52,7 @@ class PaymeTransaction extends PaymeDB{
     }
 
     public function setTransaction($id, $params = []){
-        return $this->query("UPDATE `payme_transaction` SET".$this->prepareUpdate($params)." WHERE `transaction`='{$id}';", $params);
+        $this->update("payme_transaction", $params, [ "transaction" => $id ]);
     }
 }
 ?>
